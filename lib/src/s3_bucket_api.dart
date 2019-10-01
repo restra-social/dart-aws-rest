@@ -46,14 +46,14 @@ class S3BucketApi {
 
   Future<DeleteResults> deleteObjects(List<S3Object> objects) {
     if (objects == null || objects.length == 0) {
-      _logger.warning('No objects were passed to deleteObjects, returning.');
+      print('No objects were passed to deleteObjects, returning.');
       return new Future(() => new DeleteResults());
     }
 
     final completer = new Completer<DeleteResults>();
     final deleteReq = new _DeleteRequest(objects);
     final requestXml = deleteReq.toString();
-    _logger.finest(requestXml);
+    print(requestXml);
     final uri = this._getUri(queryParams: {'delete': ''});
     final request = new AwsRequest.fromBytes(utf8.encode(requestXml), headers: {
       'content-type': 'text/xml; charset=utf-8',
@@ -61,7 +61,7 @@ class S3BucketApi {
     });
     this._awsClient.post(uri, request).then((HttpClientResponse resp) {
       _readResponseAsString(resp).then((responseText) {
-        _logger.finest(responseText);
+        print(responseText);
         final results = new DeleteResults.fromXml(responseText);
         completer.complete(results);
       });

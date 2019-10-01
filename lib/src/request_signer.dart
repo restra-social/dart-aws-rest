@@ -37,8 +37,8 @@ class RequestSigner {
     final signedHeaders = _generateSignedHeaders(req);
     final authHeader =
         _generateAuthorizationString(scope, signedHeaders, signature);
-    _logger.finest('CANONICAL REQUEST:\n$canonicalRequest\n');
-    _logger.finest('STRING TO SIGN:\n$stringToSign\n');
+    print('CANONICAL REQUEST:\n$canonicalRequest\n');
+    print('STRING TO SIGN:\n$stringToSign\n');
 
     req.headers.add('authorization', authHeader);
   }
